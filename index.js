@@ -21,8 +21,8 @@ client.on('message', msg => {
   }
   if (msg.content.includes('coco 🍰') || msg.content.includes('coco🍰') || msg.content.includes('coco :cake:') || msg.content.includes('coco:cake:')) {
     msg.react('🍰');
+    ++coco_count;
     msg.channel.send(`coco 🍰, cake counter is now ${coco_count}`)
-    coco_count++;
   }
 });
 
