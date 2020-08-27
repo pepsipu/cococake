@@ -1,12 +1,12 @@
 const Discord = require('discord.js');
+const Enmap = require('enmap');
 const client = new Discord.Client();
+const config = require('./client.json');
 
-let coco_count = 0;
+client.coco = new Enmap({ name: 'count' });
+client.coco.ensure('count', 0);
 
 client.on('ready', () => {
-  let g = client.guilds.resolve('695047575807590440');
-  let p = g.members.resolve('475525381609357313');
-  p.roles.add(g.roles.resolve('748430927570403349'));
 });
 
 client.on('message', msg => {
@@ -20,10 +20,10 @@ client.on('message', msg => {
     msg.react('728078387452575806') 
   }
   if (msg.content.includes('coco 🍰') || msg.content.includes('coco🍰') || msg.content.includes('coco :cake:') || msg.content.includes('coco:cake:')) {
+    client.coco.inc('count');
     msg.react('🍰');
-    ++coco_count;
-    msg.channel.send(`coco 🍰, cake counter is now ${coco_count}`)
+    msg.channel.send(`coco 🍰, cake counter is now ${client.coco.get('count')}`);
   }
 });
 
-client.login('');
+client.login(config.token);
